@@ -34,7 +34,12 @@ public class HelloController {
     engine = webView.getEngine();
         adressBar.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
-                engine.load(adressBar.getText());
+                if(adressBar.getText().contains("http://")){
+                    engine.load(adressBar.getText());
+                }
+                else{
+                    engine.load(basic+adressBar.getText());
+                }
             }
         });
 
@@ -44,12 +49,30 @@ public class HelloController {
 
         }
         );
+
+        //search on google
+        adressBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if(ke.getCode().equals(KeyCode.ENTER)){
+                    engine.load("https://www.google.com/search?q="+adressBar.getText());
+                }
+
+            }
+        }
+        );
 }
     @FXML
     public void loadPage(ActionEvent actionEvent) {
 
+//if contains http://
+        if(adressBar.getText().contains("http://")){
+            engine.load(adressBar.getText());
+        }
+        else{
+            engine.load(basic+adressBar.getText());
+        }
 
-        engine.load(adressBar.getText());
 
     }
 
