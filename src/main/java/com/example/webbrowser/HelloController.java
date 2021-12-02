@@ -15,7 +15,7 @@ import javafx.scene.web.WebView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class HelloController {
 
     @FXML
     private TextField adressBar;
@@ -37,6 +37,13 @@ public class HelloController implements Initializable {
                 engine.load(adressBar.getText());
             }
         });
+
+        //get current url
+        engine.locationProperty().addListener((observable, oldValue, newValue) -> {
+            adressBar.setText(newValue);
+
+        }
+        );
 }
     @FXML
     public void loadPage(ActionEvent actionEvent) {
@@ -51,8 +58,5 @@ public class HelloController implements Initializable {
         engine.getHistory().go(-1);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
 }
